@@ -8,7 +8,9 @@ window.addEventListener('DOMContentLoaded', function () {
   var contentNode = document.querySelector('.content');
   
   var contentHeight = contentNode.offsetHeight;
+  var arrowHalfWidth = arrowNode.offsetWidth / 2;
   var nowIndex = 0;
+  var wheelTimer = null;
   
   //处理头部js代码
   headerHandle();
@@ -16,7 +18,7 @@ window.addEventListener('DOMContentLoaded', function () {
     
     //初始化时小箭头来到第一个li下面
     arrowNode.style.left = headerLisNodes[0].getBoundingClientRect().left + headerLisNodes[0].offsetWidth / 2
-      - arrowNode.offsetWidth / 2 + 'px';
+      - arrowHalfWidth + 'px';
     headerDownNodes[0].style.width = '100%';
     
     for (var i = 0; i < headerLisNodes.length; i++) {
@@ -39,7 +41,7 @@ window.addEventListener('DOMContentLoaded', function () {
     headerDownNodes[nowIndex].style.width = '100%';
     //让小箭头去当前点击的li的下面
     arrowNode.style.left = headerLisNodes[nowIndex].getBoundingClientRect().left + headerLisNodes[nowIndex].offsetWidth / 2
-      - arrowNode.offsetWidth / 2 + 'px';
+      - arrowHalfWidth + 'px';
     //让内容区ul运动
     contentUlNode.style.top = - nowIndex * contentHeight + 'px';
   }
@@ -53,43 +55,54 @@ window.addEventListener('DOMContentLoaded', function () {
   
     function wheel(event) {
       event = event || window.event;
-    
-      var flag = '';
-      if (event.wheelDelta) {
-        //ie/chrome
-        if (event.wheelDelta > 0) {
-          flag = 'up';
-        } else {
-          flag = 'down';
-        }
-      } else if (event.detail) {
-        //firefox
-        if (event.detail < 0) {
-          flag = 'up';
-        } else {
-          flag = 'down';
-        }
-      }
-    
-      switch (flag) {
-        case 'up' :
-          if (nowIndex > 0) {
-            nowIndex--;
-            move(nowIndex);
+      //函数反抖：防止函数多次调用，优化函数性能。  让规定时间内调用的函数，只有最后一次生效
+      clearTimeout(wheelTimer);
+      wheelTimer = setTimeout(function () {
+        var flag = '';
+        if (event.wheelDelta) {
+          //ie/chrome
+          if (event.wheelDelta > 0) {
+            flag = 'up';
+          } else {
+            flag = 'down';
           }
-          break;
-        case 'down' :
-          if (nowIndex < 4) {
-            nowIndex++;
-            move(nowIndex);
+        } else if (event.detail) {
+          //firefox
+          if (event.detail < 0) {
+            flag = 'up';
+          } else {
+            flag = 'down';
           }
-          break;
-      }
-    
+        }
+  
+        switch (flag) {
+          case 'up' :
+            if (nowIndex > 0) {
+              nowIndex--;
+              move(nowIndex);
+            }
+            break;
+          case 'down' :
+            if (nowIndex < 4) {
+              nowIndex++;
+              move(nowIndex);
+            }
+            break;
+        }
+  
+      }, 200);
       //禁止默认行为
       event.preventDefault && event.preventDefault();
       return false;
     }
+  }
+  
+  //浏览器调整窗口大小事件
+  window.onresize = function () {
+    //修正小箭头的位置和ul位置
+    arrowNode.style.left = headerLisNodes[nowIndex].getBoundingClientRect().left + headerLisNodes[nowIndex].offsetWidth / 2
+      - arrowHalfWidth + 'px';
+    contentUlNode.style.top = - nowIndex * contentHeight + 'px';
   }
   
 })
