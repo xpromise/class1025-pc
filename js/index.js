@@ -60,14 +60,14 @@ window.addEventListener('DOMContentLoaded', function () {
         if (event.wheelDelta > 0) {
           flag = 'up';
         } else {
-          flag = 'down'
+          flag = 'down';
         }
       } else if (event.detail) {
         //firefox
         if (event.detail < 0) {
           flag = 'up';
         } else {
-          flag = 'down'
+          flag = 'down';
         }
       }
     

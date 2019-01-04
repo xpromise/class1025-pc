@@ -73,6 +73,7 @@ img{display: block;}
   transition: left 1s;
 }
 
+/*内容区*/
 .content{
   position: absolute;
   top: 80px;
