@@ -1,6 +1,5 @@
 //等待页面加载（所有资源  图片、音、视频等资源）完成，才会调用此函数
 window.onload = function () {
-  
   //处理头部js代码
   headerHandle();
   function headerHandle() {
