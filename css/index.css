@@ -17,8 +17,8 @@ img{display: block;}
   结论：选择器一般最多3-4个左右
 */
 #wrap{
+  position: relative;
   height: 100%;
-  background: pink;
 }
 .header{
   position: relative;
@@ -65,9 +65,69 @@ img{display: block;}
   position: absolute;
   left: 50%;
   bottom: -11px;
+  z-index: 10;
   width: 21px;
   height: 11px;
   background-image: url('../imgs/arrow.png');
   background-repeat: no-repeat;
   transition: left 1s;
 }
+
+.content{
+  position: absolute;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+.content-main{
+  position: absolute;
+  left: 0;
+  top: 0;  /*为了让第一次有过渡效果*/
+  height: 500%;
+  width: 100%;
+  transition: top 1s;
+}
+.content-main>li{
+  position: relative;
+  height: 20%;
+  background: pink;
+}
+.content-main section{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -260px;
+  margin-left: -550px;
+  width: 1100px;
+  height: 520px;
+  background: hotpink;
+}
+/*
+  垂直水平居中方案
+    position absolute
+    top 0
+    right 0
+    bottom 0
+    left 0
+    margin auto
+ */
+/*
+ 只能用于已知宽高
+ position: absolute;
+ top: 50%;
+ left: 50%;
+ margin-top: -260px;
+ margin-left: -550px;
+ */
+/*position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);*/
+/*
+给父元素设置
+display: flex;
+justify-content: center;
+align-items: center;
+*/
