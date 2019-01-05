@@ -105,4 +105,41 @@ window.addEventListener('DOMContentLoaded', function () {
     contentUlNode.style.top = - nowIndex * contentHeight + 'px';
   }
   
+  firstViewHandle();
+  function firstViewHandle() {
+    var homeCarouselNodes = document.querySelectorAll('.home-carousel li');
+    var homePointNodes = document.querySelectorAll('.home-point li');
+  
+    var lastIndex = 0;
+    var nowIndex = 0;
+  
+    for (var i = 0; i < homePointNodes.length; i++) {
+      homePointNodes[i].index = i;
+      homePointNodes[i].onclick = function () {
+        //同步nowIndex的值
+        nowIndex = this.index;
+        
+        if (nowIndex === lastIndex) return;
+        
+        if (nowIndex > lastIndex) {
+          //点击是右边  右边加上right-show  左边加上left-hide
+          homeCarouselNodes[nowIndex].className = 'common-title right-show';
+          homeCarouselNodes[lastIndex].className = 'common-title left-hide';
+        } else {
+          //点击是左边
+          homeCarouselNodes[nowIndex].className = 'common-title left-show';
+          homeCarouselNodes[lastIndex].className = 'common-title right-hide';
+        }
+  
+        homePointNodes[lastIndex].className = '';
+        this.className = 'active';
+        
+        //同步上一次的值
+        lastIndex = nowIndex;
+        
+      }
+    }
+  }
+  
+  
 })
