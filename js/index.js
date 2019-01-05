@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', function () {
     //让内容区ul运动
     contentUlNode.style.top = - nowIndex * contentHeight + 'px';
   }
-  move(1);
+  move(2);
   
   //内容区js代码
   contentHandle();
@@ -172,7 +172,9 @@ window.addEventListener('DOMContentLoaded', function () {
     function autoPlay() {
       timer = setInterval(function () {
         nowIndex++;
-    
+        //同步上一次点击时间，为了在轮播时用户不能点击小圆点
+        lastTime = Date.now();
+        
         if (nowIndex >= 4) nowIndex = 0;
     
         homeCarouselNodes[nowIndex].className = 'common-title right-show';
