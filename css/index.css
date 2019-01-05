@@ -56,13 +56,16 @@ img{display: block;}
   margin-left: 40px;
   cursor: pointer;
 }
+.nav li:nth-child(1){
+  width: 18px;
+}
 .nav li:hover .down{
   width: 100%;
 }
-.nav li .up{
+.up{
   color: #009EE0;
 }
-.nav li .down{
+.down{
   position: absolute;
   left: 0;
   top: 0;
@@ -104,7 +107,7 @@ img{display: block;}
   height: 20%;
   background-repeat: no-repeat;
 }
-.content-main section{
+section{
   position: absolute;
   top: 50%;
   left: 50%;
@@ -204,6 +207,7 @@ align-items: center;
   margin: 2px;
   box-shadow: 0 0 4px rgba(25,25,25,0.8);
   border-radius: 50%;
+  cursor: pointer;
 }
 .home-point .active{
   background: white;
