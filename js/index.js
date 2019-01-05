@@ -53,6 +53,7 @@ window.addEventListener('DOMContentLoaded', function () {
     //让内容区ul运动
     contentUlNode.style.top = - nowIndex * contentHeight + 'px';
   }
+  move(1);
   
   //内容区js代码
   contentHandle();
@@ -124,7 +125,7 @@ window.addEventListener('DOMContentLoaded', function () {
     var nowIndex = 0;
     var lastTime = 0;
     var timer = null;
-  
+    
     for (var i = 0; i < homePointNodes.length; i++) {
       homePointNodes[i].index = i;
       homePointNodes[i].onclick = function () {
@@ -160,7 +161,6 @@ window.addEventListener('DOMContentLoaded', function () {
       }
     }
   
-  
     homeNode.onmouseenter = function () {
       clearInterval(timer);
     }
@@ -187,5 +187,8 @@ window.addEventListener('DOMContentLoaded', function () {
     
   }
   
+  /*
+    can not read property “style” of null / undefined  index.js 123
+   */
   
 })
