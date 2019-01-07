@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style type="text/css">
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  body{
+    background: grey;
+  }
+  #myCanvas{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    background: white;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="150" height="400">
+
+</canvas>
+<script type="text/javascript">
+  var canvas = document.getElementById('myCanvas');
+
+  if (canvas.getContext) {
+    var ctx = canvas.getContext('2d');
+    var width = canvas.width;
+    var height = canvas.height;
+
+    var arr = [];
+    //生成圆
+    setInterval(function () {
+      var r = Math.round(Math.random() * 255);
+      var g = Math.round(Math.random() * 255);
+      var b = Math.round(Math.random() * 255);
+
+      var c_r = Math.round(Math.random() * 8 + 2);
+
+      var s = Math.round(Math.random() * 30 + 20);
+
+      var y = height + c_r;
+      var x = Math.round(Math.random() * width);
+
+      arr.push({
+        r: r,
+        g: g,
+        b: b,
+        c_r: c_r,
+        x: x,
+        y: y,
+        deg: 0,
+        s: s
+      })
+
+    }, 80);
+    //画圆
+    setInterval(function () {
+      //清除上一次的画布
+      ctx.clearRect(0, 0, width, height);
+
+      for (var i = 0; i < arr.length; i++) {
+        var item = arr[i];
+        //角度递增
+        item.deg+=4;
+        //得到弧度的值
+        var rad = item.deg * Math.PI / 180;
+        //求x轴的y轴的坐标
+        var x = item.x + Math.sin(rad) * item.s;
+        var y = item.y - rad * item.s;
+        //删除已经跑出去的圆
+        if (y <= -item.c_r) {
+          arr.splice(i, 1);
+          continue;
+        }
+
+        ctx.fillStyle = 'rgb(' + item.r + ',' + item.g + ',' + item.b + ')';
+        ctx.beginPath();
+        ctx.arc(x, y, item.c_r, 0, 2 * Math.PI);
+        ctx.fill();
+
+      }
+
+    }, 1000 / 60)
+
+  }
+
+</script>
+</body>
+</html>
