@@ -6,11 +6,87 @@ window.addEventListener('DOMContentLoaded', function () {
   var headerDownNodes = document.querySelectorAll('.down');
   var contentUlNode = document.querySelector('.content-main');
   var contentNode = document.querySelector('.content');
+  var navBarNodes = document.querySelectorAll('.nav-bar li');
+  var musicNode = document.querySelector('.music');
+  var musicIconNode = document.querySelector('.music-icon');
+  var homeNode = document.querySelector('.home');
+  var planeNodes = document.querySelectorAll('.course-plane');
+  var pencilNodes = document.querySelectorAll('.works-pencil');
+  var aboutUlNodes = document.querySelectorAll('.about-photo');
+  var teamTitleNode = document.querySelector('.team-title');
+  var teamContentNode = document.querySelector('.team-content');
   
   var contentHeight = contentNode.offsetHeight;
   var arrowHalfWidth = arrowNode.offsetWidth / 2;
   var nowIndex = 0;
+  var lastIndex = 0;
   var wheelTimer = null;
+  
+  //出入场动画
+  var animationArr = [
+    {
+      anOut: function () {
+        homeNode.style.transform = 'translateY(-200px)';
+        homeNode.style.opacity = 0;
+      },
+      anIn: function () {
+        homeNode.style.transform = 'translateY(0)';
+        homeNode.style.opacity = 1;
+      }
+    },
+    {
+      anOut: function () {
+        // 左上 左下 右上
+        planeNodes[0].style.transform = 'translate(-200px, -200px)';
+        planeNodes[1].style.transform = 'translate(-200px, 200px)';
+        planeNodes[2].style.transform = 'translate(200px, -200px)';
+      },
+      anIn: function () {
+        planeNodes[0].style.transform = 'translate(0, 0)';
+        planeNodes[1].style.transform = 'translate(0, 0)';
+        planeNodes[2].style.transform = 'translate(0, 0)';
+      }
+    },
+    {
+      anOut: function () {
+        // 上 下 下
+        pencilNodes[0].style.transform = 'translateY(-200px)';
+        pencilNodes[1].style.transform = 'translateY(200px)';
+        pencilNodes[2].style.transform = 'translateY(200px)';
+      },
+      anIn: function () {
+        pencilNodes[0].style.transform = 'translateY(0)';
+        pencilNodes[1].style.transform = 'translateY(0)';
+        pencilNodes[2].style.transform = 'translateY(0)';
+      }
+    },
+    {
+      anOut: function () {
+        aboutUlNodes[0].style.transform = 'rotate(45deg)';
+        aboutUlNodes[1].style.transform = 'rotate(-45deg)';
+      },
+      anIn: function () {
+        aboutUlNodes[0].style.transform = 'rotate(0)';
+        aboutUlNodes[1].style.transform = 'rotate(0)';
+      }
+    },
+    {
+      anOut: function () {
+        teamTitleNode.style.transform = 'translateX(-200px)';
+        teamContentNode.style.transform = 'translateX(200px)';
+      },
+      anIn: function () {
+        teamTitleNode.style.transform = 'translateX(0)';
+        teamContentNode.style.transform = 'translateX(0)';
+      }
+    }
+  ];
+  
+  //默认除第一屏以外，其他所有屏都做出场动画
+  for (var i = 0; i < animationArr.length; i++) {
+    if (i === 0) continue;
+    animationArr[i].anOut();
+  }
   
   //处理头部js代码
   headerHandle();
@@ -42,9 +118,12 @@ window.addEventListener('DOMContentLoaded', function () {
   //公共move函数
   function move(nowIndex) {
     //默认清空所有width为0
-    for (var j = 0; j < headerDownNodes.length; j++) {
-      headerDownNodes[j].style.width = '';
-    }
+    // for (var j = 0; j < headerDownNodes.length; j++) {
+    //   headerDownNodes[j].style.width = '';
+    //   navBarNodes[j].className = '';
+    // }
+    headerDownNodes[lastIndex].style.width = '';
+    navBarNodes[lastIndex].className = '';
     //设置当前width为100%
     headerDownNodes[nowIndex].style.width = '100%';
     //让小箭头去当前点击的li的下面
@@ -52,8 +131,14 @@ window.addEventListener('DOMContentLoaded', function () {
       - arrowHalfWidth + 'px';
     //让内容区ul运动
     contentUlNode.style.top = - nowIndex * contentHeight + 'px';
+    //侧边导航
+    navBarNodes[nowIndex].className = 'active';
+    //上一屏做出场动画  当前屏做入场动画
+    animationArr[lastIndex].anOut();
+    animationArr[nowIndex].anIn();
+    
+    lastIndex = nowIndex;
   }
-  move(4);
   
   //内容区js代码
   contentHandle();
@@ -119,7 +204,6 @@ window.addEventListener('DOMContentLoaded', function () {
   function firstViewHandle() {
     var homeCarouselNodes = document.querySelectorAll('.home-carousel li');
     var homePointNodes = document.querySelectorAll('.home-point li');
-    var homeNode = document.querySelector('.home');
     
     var lastIndex = 0;
     var nowIndex = 0;
@@ -309,5 +393,27 @@ window.addEventListener('DOMContentLoaded', function () {
   /*
     can not read property “style” of null / undefined  index.js 123
    */
+  
+  //侧边导航
+  for (var i = 0; i < navBarNodes.length; i++) {
+    navBarNodes[i].index = i;
+    navBarNodes[i].onclick = function (ev) {
+      nowIndex = this.index;
+      move(nowIndex);
+    }
+  }
+  
+  //音乐播放
+  musicIconNode.onclick = function () {
+    if (musicNode.paused) {
+      //说明当前音乐暂停，点击播放
+      musicNode.play();
+      this.style.backgroundImage = 'url("./imgs/musicon.gif")';
+    } else {
+      musicNode.pause();
+      this.style.backgroundImage = 'url("./imgs/musicoff.gif")';
+    }
+  }
+  
   
 })
