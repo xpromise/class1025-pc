@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body{
+        background: grey;
+      }
+      #myCanvas{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+
+        background: white;
+      }
+
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="400" height="400">
+  暂不支持canvas....
+</canvas>
+<script type="text/javascript">
+  var canvas = document.getElementById('myCanvas');
+  if (canvas.getContext) {
+    //判断当前页面是否支持canvas
+    var ctx = canvas.getContext('2d');
+
+    setInterval(function () {
+      var x = Math.round(Math.random() * 400);
+      var y = Math.round(Math.random() * 400);
+
+      var r = Math.round(Math.random() * 255);
+      var g = Math.round(Math.random() * 255);
+      var b = Math.round(Math.random() * 255);
+
+      //设置颜色
+      ctx.fillStyle = 'rgb(' + r + ', ' + g + ', ' + b + ')';
+      ctx.beginPath();
+      //ctx.arc(圆心x轴坐标, 圆心y轴坐标, 圆的半径, 开始的弧度, 结束的弧度, 顺时针/逆时针);
+      ctx.arc(x, y, 10, 0, 2 * Math.PI, true);
+      //填充颜色
+      ctx.fill();
+
+    }, 1000)
+  }
+
+</script>
+</body>
+</html>

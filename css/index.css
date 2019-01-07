@@ -394,6 +394,7 @@ align-items: center;
   50%{transform: translateX(-400px) rotateY(180deg)}
   100%{transform: rotateY(180deg)}
 }
+
 /*第四屏样式*/
 .about-title{
   margin: 50px 0 100px 50px;
@@ -418,15 +419,20 @@ align-items: center;
   left: 600px;
   top: 290px;
 }
-
-.about-photo ul{
+.about-photo{
   position: absolute;
   left: 0;
   top: 0;
-  width: 100%;
-  height: 100%;
+  width: 260px;
+  height: 200px;
+  background-repeat: no-repeat;
 }
-
+.about-photo:nth-of-type(1){
+  background-image: url('../imgs/about2.jpg');
+}
+.about-photo:nth-of-type(2){
+  background-image: url('../imgs/about2.jpg');
+}
 .about-photo li{
   float: left;
   width: 50%;
@@ -444,27 +450,27 @@ align-items: center;
 .about-photo:nth-of-type(2) div{
   background-image: url('../imgs/about3.jpg');
 }
-.about-photo li:nth-child(2) div{
+.about-photo .about-photo-second{
   background-position: -130px 0;
   /*background-position: 100% 0;*/
 }
-.about-photo li:nth-child(3) div{
+.about-photo .about-photo-third{
   background-position: 0 -100px;
 }
-.about-photo li:nth-child(4) div{
+.about-photo .about-photo-fourth{
   background-position: -130px -100px;
 }
 /*下左右上*/
-.about-photo:hover li:nth-child(1) div{
+.about-photo:hover .about-photo-first{
   transform: translateY(100px);
 }
-.about-photo:hover li:nth-child(2) div{
+.about-photo:hover .about-photo-second{
   transform: translateX(-130px);
 }
-.about-photo:hover li:nth-child(3) div{
+.about-photo:hover .about-photo-third{
   transform: translateX(130px);
 }
-.about-photo:hover li:nth-child(4) div{
+.about-photo:hover .about-photo-fourth{
   transform: translateY(-100px);
 }
 

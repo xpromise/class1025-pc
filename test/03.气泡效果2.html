@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      body{
+        background: grey;
+      }
+      #myCanvas{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+
+        background: white;
+      }
+
+    </style>
+</head>
+<body>
+
+<canvas id="myCanvas" width="400" height="400">
+  暂不支持canvas....
+</canvas>
+<script type="text/javascript">
+  var canvas = document.getElementById('myCanvas');
+  if (canvas.getContext) {
+    //判断当前页面是否支持canvas
+    var ctx = canvas.getContext('2d');
+    //初始化容器
+    var arr = [];
+
+    var c_r = 10;
+    var a = 1;
+    //生成圆
+    setInterval(function () {
+      var x = Math.round(Math.random() * 400);
+      var y = Math.round(Math.random() * 400);
+
+      var r = Math.round(Math.random() * 255);
+      var g = Math.round(Math.random() * 255);
+      var b = Math.round(Math.random() * 255);
+
+      arr.push({
+        x: x,
+        y: y,
+        r: r,
+        g: g,
+        b: b,
+        c_r: c_r,
+        a: a
+      })
+    }, 20)
+    //画圆
+    setInterval(function () {
+
+      //清除画布
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      for (var i = 0; i < arr.length; i++) {
+        var item = arr[i];
+        item.c_r += 1;
+        item.a -= 0.01;
+        if (item.a <= 0) {
+          //删除当前元素
+          arr.splice(i, 1);
+          //退出所有循环
+          // break;
+          //退出当前循环, 开启下一次循环
+          continue;
+        }
+        //设置颜色
+        ctx.fillStyle = 'rgba(' + item.r + ', ' + item.g + ', ' + item.b + ', ' + item.a + ')';
+        ctx.beginPath();
+        //ctx.arc(圆心x轴坐标, 圆心y轴坐标, 圆的半径, 开始的弧度, 结束的弧度, 顺时针/逆时针);
+        ctx.arc(item.x, item.y, item.c_r, 0, 2 * Math.PI, true);
+        //填充颜色
+        ctx.fill();
+      }
+
+
+    }, 1000 / 60)
+  }
+
+</script>
+</body>
+</html>

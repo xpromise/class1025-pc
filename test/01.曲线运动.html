@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+  <style type="text/css">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    #test{
+      position: absolute;
+      top:200px;
+      left: 200px;
+      width: 10px;
+      height: 10px;
+      background: deeppink;
+    }
+    .box{
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+
+<div id="test"></div>
+
+</body>
+<script type="text/javascript">
+
+  var test = document.getElementById('test');
+  //初始化角度为0
+  var deg = 0;
+  //初始化缩放系数
+  var scale = 100;
+  //得到初始化位置
+  var testLeft = test.offsetLeft;
+  var testTop= test.offsetTop;
+
+  setInterval(function () {
+    var div = document.createElement('div');
+    deg++;
+    //将角度转化为弧度
+    var rad = deg * Math.PI / 180;
+
+    div.style.left = testLeft + rad * scale * 0.5 + 'px';
+    div.style.top = testTop + Math.sin(rad) * scale * 2 + 'px';
+
+    div.className = 'box';
+    document.body.appendChild(div);
+  }, 1000 / 60)
+
+</script>
+</html>
