@@ -53,7 +53,7 @@ window.addEventListener('DOMContentLoaded', function () {
     //让内容区ul运动
     contentUlNode.style.top = - nowIndex * contentHeight + 'px';
   }
-  move(2);
+  move(3);
   
   //内容区js代码
   contentHandle();
