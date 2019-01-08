@@ -84,8 +84,46 @@ window.addEventListener('DOMContentLoaded', function () {
   
   //默认除第一屏以外，其他所有屏都做出场动画
   for (var i = 0; i < animationArr.length; i++) {
-    if (i === 0) continue;
     animationArr[i].anOut();
+  }
+  
+  //开机动画
+  bootAnimation();
+  function bootAnimation() {
+    var bootAnimationLineNode = document.querySelector('.boot-animation .line');
+    var bootAnimationTopNode = document.querySelector('.boot-animation .top');
+    var bootAnimationBottomNode = document.querySelector('.boot-animation .bottom');
+    var bootAnimationNode = document.querySelector('.boot-animation');
+    
+    //开机动画：为了等待页面所有图片加载完成
+    var imageArr = ['bg1.jpg','bg2.jpg','bg3.jpg','bg4.jpg','bg5.jpg','about1.jpg','about2.jpg','about3.jpg','about4.jpg','worksimg1.jpg','worksimg2.jpg','worksimg3.jpg','worksimg4.jpg','team.png','greenLine.png'];
+    //加载完成图片的数量
+    var num = 0;
+    var length = imageArr.length
+    for (var i = 0; i < length; i++) {
+      var item = imageArr[i];
+      var image = new Image();
+      image.src = './imgs/' + item;
+    
+      image.onload = function () {
+        num++;
+        //只要当前函数调用了，说明当前图片加载完成了~
+        bootAnimationLineNode.style.width = num / length * 100 + '%';
+        if (num === length) {
+          //说明图片全部加载完成了
+          bootAnimationTopNode.style.height = 0;
+          bootAnimationBottomNode.style.height = 0;
+          bootAnimationLineNode.style.display = 'none';
+        
+          bootAnimationTopNode.addEventListener('transitionend', function () {
+            //移除开机动画遮罩层
+            bootAnimationNode.remove();
+            //让第一屏做入场动画
+            animationArr[0].anIn();
+          })
+        }
+      }
+    }
   }
   
   //处理头部js代码
